@@ -43,7 +43,8 @@
 # Software: R version 4.4.1 — t.test(), wilcox.test(), shapiro.test().
 
 # ---- RESULTS ----
-tpr <- read.csv("tprdata.csv") # Load data
+# 1. Import
+tpr <- read.csv("datasets/tprdata.csv")
 
 cat("==========================================================\n")
 cat("         TOE PRESSURE: DESCRIPTIVE STATISTICS              \n")
