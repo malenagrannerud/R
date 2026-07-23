@@ -1,9 +1,15 @@
-# ==============================================================================
-# COVID-19 CASE PROBABILITY — POISSON DISTRIBUTION
+# 1. Covid-19 Poisson-analys (Task 1)          → Risk/sannolikhet
+# 2. Toe pressure — två metoder (Task 2)       → Gruppjämförelse/metodval
+# 3. Image quality — ordinal data (Task 4)     → Icke-normal data + design
+# 4. Blood zinc — flergruppsanalys (Task 1)    → Segmentanalys
+# 5. Cushings — logistisk regression           → Prediktiv modellering
+
 # Author: Malena Grannerud
-# Description: Demonstrates Poisson distribution for count data, probability calculations, 
+# ==========================================================================================================
+# COVID-19 CASE PROBABILITY — POISSON DISTRIBUTION
+# Description: Risk/probability. Demonstrates Poisson distribution for count data, probability calculations, 
 #              assumption evaluation, and critical interpretation for real-world planning.
-# ==============================================================================
+# ==========================================================================================================
 #
 # INTRODUCTION
 # A city of 120,000 inhabitants has been experiencing a Covid-19 outbreak with on average 12 new cases per week.
@@ -118,13 +124,15 @@ legend("topright",
 
 
 
-# ==============================================================================
+
+
+
+
+# ==========================================================================================================
 # TOE ARTERY PRESSURE — TWO-GROUP COMPARISON
-# Author: Malena Grannerud
-# Description: Compares two statistical approaches for two-group inference,
-#              demonstrating method selection based on data structure and
-#              assumption evaluation.
-# ==============================================================================
+# Description: Compares two statistical approaches for two-group inference,demonstrating method selection 
+#              based on data structure and assumption evaluation.
+# ==========================================================================================================
 
 # ---- INTRODUCTION ----
 # The arterial pressure in the toes,can be an indicator of arterial disease in the lower limbs. 
