@@ -3,30 +3,28 @@
 # ==============================================================================
 
 # INTRODUCTION
-# A city of 120,000 inhabitants has been experiencing a Covid-19 outbreak.
-# The average is 12 new cases per week.
+# A city of 120,000 inhabitants has been experiencing a Covid-19 outbreak. The average is 12 new cases per week.
 # 
 # The goal of this report is to 
 #   (i) Calculate the probability of more than 20 cases for a week and 
-#   (ii) Calculate the probability of (i) happening two weeks in a row.
-
+#   (ii) Calculate the probability of (i) happening two weeks in a row
+# to help healthcare services prepare for potential surges in cases.
+#
 # METHOD
-# We use a Poisson distribution because Covid cases are rare, discrete events 
-# in a large population over a fixed period of time.
+# Probability of more than 20 cases during a single week: P(X > 20) = 1 - P(X <= 20)
+# Probability of more than 20 cases two weeks in a row (assuming independent weeks):
+
+# We use a Poisson distribution because Covid cases are rare, discrete events in a large population over a fixed period of time.
 # Advantages: Simple, requires only the parameter lambda = 12.
 # Disadvantages: The model assumes independence between cases and constant intensity. 
 # This rarely holds true for infectious diseases that spread in clusters (transmission risk increases).
 
 # RESULTS
-# Calculation in R:
 lambda <- 12
-
-# Probability of more than 20 cases during a single week: P(X > 20) = 1 - P(X <= 20)
 p_single_week <- 1 - ppois(20, lambda = lambda)
 print(paste("Probability > 20 cases (single week):", round(p_single_week, 6)))
 # [Result: ~0.011598 or 1.16%]
 
-# Probability of more than 20 cases two weeks in a row (assuming independent weeks):
 p_two_weeks <- p_single_week^2
 print(paste("Probability > 20 cases (two consecutive weeks):", round(p_two_weeks, 6)))
 # [Result: ~0.000135 or 0.014%]
