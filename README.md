@@ -5,8 +5,9 @@
 
 ## Quick start
 ```bash
-pip install numpy scipy matplotlib   
-python covid.py   
+pip install numpy scipy matplotlib
+cd code
+python covid.py
 ```
 
 ---
@@ -64,13 +65,11 @@ These results should be treated as a **lower bound**. Models accounting for temp
 **Skills demonstrated:** hypothesis testing · normality diagnostics · parametric vs. non-parametric methods · Python (scipy, pandas, matplotlib)
 
 ## Quick start
-
-​```bash  
-pip install pandas numpy scipy matplotlib   
-python toe_pressure.py   
-​```
-
----
+```bash
+pip install pandas numpy scipy matplotlib
+cd code
+python toe_pressure.py
+```
 
 ## INTRODUCTION
 Toe artery pressure, measured by photoplethysmography, can indicate arterial disease in the lower limbs. Pressure readings were collected from 28 patients under two treatment regimes: **standard** (n=10) and **new** (n=18).
