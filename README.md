@@ -1,73 +1,59 @@
 
 ## COVID-19 PROBABILITY — POISSON DISTRIBUTION
-#### Risk/probability. Demonstrates Poisson distribution for count data, probability calculations, assumption evaluation, and critical interpretation for real-world planning.
 ##### Author: Malena Grannerud
+### Skills demonstrated: probability modeling · Poisson distribution · Python (scipy, matplotlib) · statistical communication
+
+Quick start
+
+  pip install numpy scipy matplotlib
+  python covid.py
 
 #### INTRODUCTION
 A city of 120,000 inhabitants has been experiencing a Covid-19 outbreak with on average 12 new cases per week.
 
-##### AIM
-The goal of this report is to calculate the probability of extreme weekly caseloads to assist healthcare services in capacity planning. Specifically, this analysis determines the probability:
-
-(i) of more than 20 new cases occurring within a single week (\(P(X > 20)\)).
-
-(ii) of this threshold being breached for two consecutive weeks (\(P(X > 20)^2\)).
+**Aim** Estimate the probability of extreme weekly caseloads to assist healthcare capacity planning:
+- **(i)** of more than 20 new cases occurring within one week (\(P(X > 20)\)).      
+- **(ii)** of this threshold being breached for two consecutive weeks (\(P(X > 20)^2\)).
 
 #### METHOD
-##### Data Collection & Sampling
-Target Population: 120 000 individuals.
+**Population:** 120 000 individuals.
                                                             
-##### Statistical Analysis 
-A "case" is defined as a new positive Covid-19 test during a calendar week. To answer (i) and (ii), The Poisson distribution was used since it models the number of rare, independent events over time or space, where mean = variance = λ. The formula is
+**Statistical Analysis:** The Poisson distribution models rare, independent count events over time where mean = variance = λ: 
 
-       P(X>k) = 1 - Σ_{i=0}^{k} (λ^i * e^{-λ}) / i!
-where
-       X: random variable (number of events)
-       k: nr of events we calculate the probability for (k = 0, 1, 2, …)
-       i: summation index (i = 0, 1, 2, ..., k)
-       λ: average nr of events per time unit 
-       e: Euler's number (≈ 2.71828)
-       i!: the factorial of i
+​```
+P(X > k) = 1 − Σ_{i=0}^{k} (λ^i · e^{−λ}) / i!
+​```
+- X: number of events, k: threshold, i: summation index
+- λ: average events per time unit, e: Euler's number (≈ 2.71828), i!: the factorial of i
+- in Python: `poisson.sf(k, lam)`, where, k=20,lam=12
 
-and the function in R
-
-        ppois(k, lambda, lower.tail = FALSE)
-where
-        k=20 
-        lambda=12
-
-##### Assumptions for the Poisson distribution 
+**Assumptions:**
 1. Independent events
 2. Constant average rate 
 3. No simultaneous events
 4. Proportionality. Assumptions 1–4 imply Dispersion index=Var(X)/E(X)≈1
 5. Independence between consecutive weeks for the two-week calculation
 
-Significance Level: α = 0.05, Type I error 
+**Significance Level:** α = 0.05, Type I error 
 
 #### RESULTS
+| Metric | Value |
+|---|---|
+| (i) P(X > 20) | 0.01160 → **1.16%** |
+| (ii) P(X > 20)² | 0.0001345 → **0.0135%** |
 
-##### (i) The probability of > 20 new cases in one week
-P(X>k) = 1 - Σ_{i=0}^{k} (λ^i * e^{-λ}) / i! = 0.01159774 --> 1,16% 
-
-##### (ii) The probability of (i) occurring two weeks in a row
-[P(X>k)]² = 0.0001345075
+##### Plot
+<img width="3600" height="1100" alt="covid" src="https://github.com/user-attachments/assets/c2f10d71-262f-4e7d-b3f4-87029c7c1515" />
 
 #### DISCUSSION
-Poisson distribution is simple, well-established, and requires only λ. It is suitable for rare, 
-independent count events in a large population & gives quick analytical answers without simulation.
+The Poisson model is simple, well-established, and analytically fast — well-suited to rare, independent events in a large population.
 
-##### (i) The probability of > 20 new cases in one week 
-The probability is ≈ 1.13% → such an event occurs on average once every 88 weeks (~1.7 years). This is uncommon but not extremely rare. Covid cases are often clustered (households, workplaces) → may cause overdispersion (Var > λ). λ is rarely constant in reality due to seasonality, restrictions, new variants, and behavioural changes.
+**(i)** ≈1.16% corresponds to roughly once every 86 weeks (~1.7 years) — uncommon but not extreme. In practice, Covid cases cluster (households, workplaces), which can cause overdispersion (Var > λ); λ itself is rarely constant due to seasonality, restrictions, variants, and behaviour changes.
 
-##### (ii) The probability of (i) occurring two weeks in a row
-This is very unlikely (0.013%) under the assumption of independence between weeks. Transmission waves often span multiple weeks → [P(X>20)]² likely UNDERESTIMATES the true probability. If overdispersion is present, a Negative Binomial model would be more appropriate, as it allows variance > mean.
+**(ii)** 0.0135% is very low under the independence assumption. Since transmission waves typically span multiple weeks, this figure likely underestimates the true probability. A Negative Binomial model, which allows Var > mean, would better capture overdispersion.
 
 #### CONCLUSION
-For healthcare planning, these results should be treated as a lower bound, and models accounting for temporal dependence (e.g., time-series or Negative Binomial models) should be considered.
-
-
-
+These results should be treated as a **lower bound**. Models accounting for temporal dependence and overdispersion (e.g., time-series or Negative Binomial models) should be considered for more robust capacity planning.
 
 
 -------------------------------------------------------
