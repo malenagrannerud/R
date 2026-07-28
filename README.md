@@ -1,7 +1,7 @@
 
 ## COVID-19 PROBABILITY — POISSON DISTRIBUTION
-### Risk/probability. Demonstrates Poisson distribution for count data, probability calculations, assumption evaluation, and critical interpretation for real-world planning.
-#### Author: Malena Grannerud
+#### Risk/probability. Demonstrates Poisson distribution for count data, probability calculations, assumption evaluation, and critical interpretation for real-world planning.
+##### Author: Malena Grannerud
 
 #### INTRODUCTION
 A city of 120,000 inhabitants has been experiencing a Covid-19 outbreak with on average 12 new cases per week.
@@ -81,8 +81,8 @@ For healthcare planning, these results should be treated as a lower bound, and m
 -------------------------------------------------------
 
 ## TOE ARTERY PRESSURE — TWO-GROUP COMPARISON
-### Compares two statistical approaches for two-group inference, demonstrating method selection based on data structure and assumption evaluation.
-#### Author: Malena Grannerud
+#### Compares two statistical approaches for two-group inference, demonstrating method selection based on data structure and assumption evaluation.
+##### Author: Malena Grannerud
 
 
 #### INTRODUCTION
