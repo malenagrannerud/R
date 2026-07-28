@@ -44,8 +44,8 @@ ax.plot(k, p_single, 'o', color='#c0392b', zorder=5)
 ax.axhline(p_single, color='#c0392b', linestyle=':', linewidth=1.2)
 ax.axvline(k, color='#c0392b', linestyle=':', linewidth=1.2)
 ax.set_title('Survival function P(X > x)')
-ax.set_xlabel('Threshold (x)')
-ax.set_ylabel('P(X > x)')
+ax.set_xlabel('Number of x weekly cases ')
+ax.set_ylabel('P(X > x) - Probability of exceeding x weekly cases')
 ax.legend(frameon=False)
 
 # --- Panel 3: Single week vs. two weeks ---
