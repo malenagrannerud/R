@@ -1,30 +1,8 @@
-# Author: Malena Grannerud
-# ==========================================================================================================
-# COVID-19 CASE PROBABILITY — POISSON DISTRIBUTION
-# Description: Risk/probability. Demonstrates Poisson distribution for count data, probability calculations, 
-#              assumption evaluation, and critical interpretation for real-world planning.
-# ==========================================================================================================
+
+
+
+## COVID-19 PROBABILITY — POISSON DISTRIBUTION
 #
-# INTRODUCTION
-# A city of 120,000 inhabitants has been experiencing a Covid-19 outbreak with on average 12 new cases per week.
-# The goal of this report is to 
-#   (i) Calculate the probability of more than 20 cases for a week  
-#   (ii) Calculate the probability of (i) happening two weeks in a row
-# to help healthcare services prepare for potential surges in cases.
-#
-# METHOD
-# 1. Data Collection & Sampling
-# Target Population: 120 000 individuals.
-#
-# 2. Variables & Measurement
-# Random Variable (X): Number of new Covid-19 cases per week. Discrete quantitative variable.
-# Parameter λ: Average number of cases per week = 12.
-# Operational Definitions: A "case" is defined as a new positive Covid-19 test during a calendar week.
-# Data Scale: True zero exists, counts are meaningful --> Ratio.
-#                                                                     
-# 3. Statistical Analysis & Modeling
-# To answer (i) and (ii), The Poisson distribution was used. 
-# The Poisson distribution models the number of rare, independent events over time or space, where mean = variance = λ.
 #        P(X>k) = 1 - Σ_{i=0}^{k} (λ^i * e^{-λ}) / i!
 #        P(X>k two weeks in a row) = [P(X>k)]², 
 # where
@@ -34,16 +12,7 @@
 #        λ: average nr of events per time unit 
 #        e: Euler's number (≈ 2.71828)
 #        i!: the factorial of i
-# Assumptions: 
-# 1. Independent events
-# 2. Constant average rate 
-# 3. No simultaneous events
-# 4. Proportionality. Assumptions 1–4 imply Dispersion index=Var(X)/E(X)≈1
-# 5. Independence between consecutive weeks for the two-week calculation
-# Significance Level: α = 0.05, Type I error 
-# Software: RStudio-ppois(), dpois().
 
-# RESULTS
 lambda <- 12  # Average number of cases per week
 k <- 20 # Threshold value
 
@@ -96,24 +65,4 @@ legend("topright",
        lty = c(NA, NA, 2),
        lwd = c(NA, NA, 2),
        col = c(NA, NA, "red"))
-
-# ---- DISCUSSION ----
-# Poisson distribution is simple, well-established, and requires only λ. It is suitable for rare, 
-# independent count events in a large population & gives quick analytical answers without simulation.
-#
-# (i) CALCULATE THE PROBABILITY OF > 20 CASES IN A WEEK 
-# The probability of >20 cases in a single week ≈ 1.13% → such an event occurs on average once every 88 weeks (~1.7 years).
-# This is uncommon but not extremely rare.
-# Assumption 1: Covid cases are often clustered (households, workplaces) → may cause overdispersion (Var > λ).
-# Assumption 2: λ is rarely constant in reality due to seasonality, restrictions, new variants, and behavioural changes.
-#
-# (ii) CALCULATE THE PROBABILITY OF (i) HAPPENING 2 WEEKS IN A ROW
-# Two consecutive weeks with >20 cases is very unlikely (0.013%) under the assumption of independence between weeks.
-# Assumption 5: Transmission waves often span multiple weeks → [P(X>20)]² likely UNDERESTIMATES the true probability.
-# If overdispersion is present, a Negative Binomial model would be more appropriate, as it allows variance > mean.
-
-# ---- CONCLUSION ----
-# For healthcare planning, these results should be treated as a lower bound, and models accounting for temporal dependence
-# (e.g., time-series or Negative Binomial models) should be considered.
-
 
