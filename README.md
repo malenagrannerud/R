@@ -4,10 +4,12 @@
 ### Skills demonstrated: probability modeling · Poisson distribution · Python (scipy, matplotlib) · statistical communication
 
 Quick start
-
+```bash
   pip install numpy scipy matplotlib
   python covid.py
+```
 
+---
 #### INTRODUCTION
 A city of 120,000 inhabitants has been experiencing a Covid-19 outbreak with on average 12 new cases per week.
 
@@ -58,103 +60,77 @@ These results should be treated as a **lower bound**. Models accounting for temp
 
 -------------------------------------------------------
 
-## TOE ARTERY PRESSURE — TWO-GROUP COMPARISON
-#### Compares two statistical approaches for two-group inference, demonstrating method selection based on data structure and assumption evaluation.
-##### Author: Malena Grannerud
+# Toe Artery Pressure — Comparing Two Treatment Regimes
 
+**Author:** Malena Grannerud
+**Skills demonstrated:** hypothesis testing · normality diagnostics · parametric vs. non-parametric methods · Python (scipy, pandas, matplotlib)
 
-#### INTRODUCTION
-The arterial pressure in the toes can be an indicator of arterial disease in the lower limbs. 
-Such pressure measurements were collected of two different treatments, "standard" and "new". 
+## Quick start
+​```bash
+pip install pandas numpy scipy matplotlib
+python toe_pressure.py
+​```
 
-##### AIM
-Determine whether a "new" treatment differs from "standard" treatment in toe artery pressure.
+---
 
-#### METHOD 
-##### Data & Study Design 
-Design: Independent groups design 
-Data source: tprdata.csv.
+## INTRODUCTION
+Toe artery pressure, measured by photoplethysmography, can indicate arterial disease in the lower limbs. Pressure readings were collected from 28 patients under two treatment regimes: **standard** (n=10) and **new** (n=18).
 
-##### Variables
-Outcome (Y): Toe artery pressure (continuous, Ratio scale).
-Predictor (X): Treatment group (binary categorical: standard / new).
+**Aim:** Determine whether toe pressure differs between the two treatment groups, using at least two statistical approaches suited to the data's structure.
 
-##### Statistical Methods 
-Two complementary approaches selected:
+## METHOD
+**Data:** `tprdata.csv` — 28 patients, each with a treatment group (`standard`/`new`) and a toe pressure reading (mmHg).
 
-METHOD A: Independent samples t-test (Welch's t-test) 
-  Parametric test. Assumptions: 
-       (i) Independence, 
-       (ii) Approximate normality per group. Tested with Shapiro-Wilk test.
-       (iii) Welch's does not assume equal variances. Tested with Q-Q plots per group.
-  H₀: μ_standard = μ_new
-  H₁: μ_standard ≠ μ_new
-  Test statistic: t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)
+**Approach:** Since group sizes are unequal (10 vs. 18) and it isn't known in advance whether toe pressure is normally distributed within each group, two complementary tests were used:
 
-METHOD B: Wilcoxon rank-sum test (Mann–Whitney U). 
-  Non-parametric. Assumptions: 
-       (i) Independence, 
-       (ii) Observations are ordinal/comparable. Tested with Levene's test. 
-       (iii) Under H₀, distributions have same shape. Tested with F-test. 
-  H₀: Distributions are equal (stochastic equality).
-  H₁: Distributions differ (shift alternative).
-  Test statistic: U = sum of ranks in group 1.
+1. **Welch's t-test** (parametric) — compares group means, does not assume equal variances. Appropriate if data are approximately normally distributed.
+2. **Mann-Whitney U test** (non-parametric) — compares group *distributions/ranks* rather than means. Makes no normality assumption and is robust to outliers — a useful cross-check given the small "standard" group (n=10) and the visible spread of values (min 20, max 110).
 
-Significance level: α = 0.05 (two-sided).
+**Assumption checks performed first:**
+- **Shapiro-Wilk test** — checks normality within each group
+- **Levene's test** — checks equality of variances between groups
 
-#### RESULTS 
-DESCRIPTIVE STATISTICS
-Standard — n: [n], Mean: [mean], SD: [sd]
-New      — n: [n], Mean: [mean], SD: [sd]
+**Significance level:** α = 0.05
 
-NORMALITY (Shapiro-Wilk):
-  Standard: W = [W], p = [p]  ([OK/DEVIATES])
-  New:      W = [W], p = [p]  ([OK/DEVIATES])
+## RESULTS
 
-INFERENTIAL RESULTS (α = 0.05)
-METHOD A — Welch's t-test:
-  t = [t], df = [df], p = [p]
-  Mean difference: [diff] [CI_lower, CI_upper]
-  Decision: [Significant difference / No significant difference]
+| Statistic | Standard (n=10) | New (n=18) |
+|---|---|---|
+| Mean | 53.90 | 68.57 |
+| SD | 15.41 | 20.28 |
+| Median | 54.55 | 70.55 |
 
-METHOD B — Wilcoxon rank-sum test:
-  W = [W], p = [p]
-  Decision: [Significant difference / No significant difference]
+**Assumption checks**
 
-#### DISCUSSION
+| Test | Result |
+|---|---|
+| Shapiro-Wilk, standard | W=0.918, p=0.344 (normal) |
+| Shapiro-Wilk, new | W=0.975, p=0.886 (normal) |
+| Levene's test (equal variance) | p=0.198 (variances not significantly different) |
 
-  t-test: More powerful if normality holds. Wilcoxon: Robust to outliers and non-normality; uses ranks.
-  Comparing both shows whether conclusion is sensitive to assumptions.
+**Group comparison**
 
-CONVERGENCE OF METHODS:
-Both methods [agree/disagree] → conclusion is [robust/sensitive to assumptions].
-If t-test gives p < 0.05 but Wilcoxon does not → potential outlier influence
-or normality violation driving parametric result.
+| Test | Statistic | p-value |
+|---|---|---|
+| Welch's t-test | t = 2.149 | **p = 0.042** |
+| Mann-Whitney U | U = 132.0 | **p = 0.047** |
 
-METHOD SELECTION JUSTIFICATION:
-- t-test: Assumes normality; more powerful if met. Welch's variant used to
-  avoid equal-variance assumption.
-- Wilcoxon: Uses ranks, not values → robust to outliers and skewness.
-  Trade-off: slightly lower power when normality holds.
+**Effect size:** Cohen's d = 0.78 (medium–large effect); mean difference = **14.67 mmHg** higher in the "new" group.
 
-ASSUMPTION EVALUATION:
-- Shapiro-Wilk [showed/did not show] deviation from normality.
-- Q-Q plots [confirm/suggest caution regarding] normality.
-- If normality violated → Wilcoxon is primary; t-test is supportive.
-- If normality holds → t-test is primary; Wilcoxon confirms robustness.
+##### Plot
+<img width="900" alt="toe pressure results" src="ATTACH_YOUR_IMAGE_LINK_HERE" />
 
-PRACTICAL INTERPRETATION:
-A statistically significant difference means the new treatment affects
-toe pressure. Clinical relevance depends on effect size (mean difference
-and confidence interval), not just p-value.
+## DISCUSSION
+Both the Shapiro-Wilk tests (p > 0.05 in both groups) and visual inspection (Q-Q plot) suggest toe pressure is reasonably normally distributed within each group, and Levene's test shows no significant difference in variance between groups — so the parametric t-test assumptions are reasonably well met.
 
-#### CONCLUSION 
-Based on [Method A / Method B / both], there [is/is not] a statistically
-significant difference in toe artery pressure between standard and new
-treatments (α = 0.05).
-Using two methods with different assumptions ensures the conclusion is
-not an artefact of a single method's limitations — a hallmark of
-rigorous statistical practice.
+Both tests agree: there is a **statistically significant difference** between groups (both p < 0.05), with the "new" treatment associated with **higher toe pressure** on average (~14.7 mmHg higher). The Mann-Whitney U test, which does not rely on normality, gives a very similar p-value (0.047 vs. 0.042), reinforcing that the result is not an artifact of a parametric assumption being violated.
+
+The effect size (Cohen's d ≈ 0.78) indicates a **medium-to-large** practical difference, not just statistical significance — relevant when judging clinical importance.
+
+**Limitations:** Group sizes are unequal and small (10 vs. 18), which limits statistical power, especially for the standard group. The study design here appears observational/comparative rather than randomized in this dataset excerpt — if patients were not randomly assigned to treatments, other factors (disease severity, age, etc.) could confound the comparison.
+
+## CONCLUSION
+There is evidence of a statistically significant and practically relevant difference in toe pressure between the "standard" and "new" treatment groups, with higher pressures observed under the "new" regime. Because two independent tests (parametric and non-parametric) converge on the same conclusion, the finding appears robust to distributional assumptions. Confirmation via a larger, ideally randomized, sample is recommended before drawing firm clinical conclusions.
 
 
 
