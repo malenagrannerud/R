@@ -5,8 +5,7 @@ import scipy.stats as stats
 lambda_val = 12
 k = 20
 
-# stats.poisson.cdf(k, lambda) beräknar P(X <= 20)
-# 1 minus cdf ger komplementhändelsen P(X > 20)
+# Beräkna sannolikheter via scipy
 p_single_week = 1 - stats.poisson.cdf(k, lambda_val)
 p_two_weeks = p_single_week ** 2
 
