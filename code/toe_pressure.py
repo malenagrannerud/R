@@ -9,7 +9,7 @@ from scipy import stats
 import matplotlib.pyplot as plt
 
 # Load data
-df = pd.read_csv('tprdata.csv', sep=';', decimal=',')
+df = pd.read_csv('../datasets/tprdata.csv', sep=';', decimal=',')
 
 new = df.loc[df.treatment == 'new', 'toepr']
 std = df.loc[df.treatment == 'standard', 'toepr']
