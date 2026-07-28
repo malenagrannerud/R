@@ -59,7 +59,7 @@ ax.set_ylabel('Probability')
 ax.set_title('Single week vs. two consecutive weeks')
 
 plt.tight_layout()
-plt.savefig('covid.png', dpi=200)
+plt.savefig('../images/covid.png', dpi=200)
 plt.close()
 
 print("Saved combined figure as covid.png")

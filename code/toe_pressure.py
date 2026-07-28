@@ -83,7 +83,7 @@ ax.get_lines()[1].set_color('black')
 ax.set_title('Q-Q plot: "new" group vs. normal distribution')
 
 plt.tight_layout()
-plt.savefig('toe_pressure_results.png', dpi=200)
+plt.savefig('../images/toe_pressure_results.png', dpi=200)
 plt.close()
 
 print("\nFigure saved as toe_pressure_results.png")
