@@ -1,9 +1,9 @@
 
-## COVID-19 PROBABILITY — POISSON DISTRIBUTION
-##### Author: Malena Grannerud
-### Skills demonstrated: probability modeling · Poisson distribution · Python (scipy, matplotlib) · statistical communication
+# COVID-19 PROBABILITY — POISSON DISTRIBUTION
+**Author:** Malena Grannerud
+**Skills demonstrated:**  probability modeling · Poisson distribution · Python (scipy, matplotlib) · statistical communication
 
-Quick start
+## Quick start
 ```bash
   pip install numpy scipy matplotlib
   python covid.py
@@ -13,9 +13,7 @@ Quick start
 #### INTRODUCTION
 A city of 120,000 inhabitants has been experiencing a Covid-19 outbreak with on average 12 new cases per week.
 
-**Aim** Estimate the probability of extreme weekly caseloads to assist healthcare capacity planning:
-- **(i)** of more than 20 new cases occurring within one week (\(P(X > 20)\)).      
-- **(ii)** of this threshold being breached for two consecutive weeks (\(P(X > 20)^2\)).
+**Aim** Estimate the probability of extreme weekly caseloads to assist healthcare capacity planning: **(i)** of more than 20 new cases occurring within one week (\(P(X > 20)\)), and **(ii)** of this threshold being breached for two consecutive weeks (\(P(X > 20)^2\)).
 
 #### METHOD
 **Population:** 120 000 individuals.
