@@ -7,11 +7,11 @@
 A city of 120,000 inhabitants has been experiencing a Covid-19 outbreak with on average 12 new cases per week.
 
 ##### AIM
-The goal of this report is to 
-- (i) Calculate the probability of > 20 new cases in one week
-- (ii) Calculate the probability of (i) occurring two weeks in a row
+The goal of this report is to calculate the probability
+- (i) of > 20 new cases occurring in one week
+- (ii) of (i) occurring two weeks in a row
 
-to help healthcare services prepare for potential surges in cases.
+to help healthcare services prepare.
 
 #### METHOD
 ##### Data Collection & Sampling
