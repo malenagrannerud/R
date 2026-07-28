@@ -1,55 +1,65 @@
+"""
+Covid-19 weekly caseload analysis
+Poisson model: lambda = 12 cases/week
+(i)  P(X > 20)
+(ii) P(X > 20) for two consecutive weeks (independence assumed)
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.stats as stats
+from scipy.stats import poisson
 
-lambda_val = 12
-k = 20
+lam = 12          # average weekly cases
+k = 20            # threshold
 
-# Beräkna sannolikheter via scipy
-p_single_week = 1 - stats.poisson.cdf(k, lambda_val)
-p_two_weeks = p_single_week ** 2
+p_single = poisson.sf(k, lam)      # P(X > 20) = 1 - CDF(20)
+p_two    = p_single ** 2           # two consecutive weeks (independent)
 
-print(f"Average cases per week (lambda):    {lambda_val}")
-print(f"Threshold (k):                      {k}")
-print(f"(i) Single week P(X > {k}):          {p_single_week:.6f} (approx {p_single_week*100:.4f}%)")
-print(f"(ii) Two consecutive weeks:         {p_two_weeks:.8f} (approx {p_two_weeks*100:.6f}%)")
+print(f"P(X > {k})            = {p_single:.6f}  ({p_single*100:.2f} %)")
+print(f"P(X > {k}) two weeks  = {p_two:.6f}  ({p_two*100:.4f} %)")
 
-x_vals = np.arange(0, 31)
+# Combined figure: 1 row x 3 columns
 
-# --- SKAPA HÄR TVÅ PLOTTAR BREDVID VARANDRA (1 rad, 2 kolumner) ---
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+x = np.arange(0, 35)
+pmf = poisson.pmf(x, lam)
+sf = poisson.sf(x, lam)
 
-# ================= PLOT 1: EN ENSKILD VECKA =================
-y_vals_single = stats.poisson.pmf(x_vals, lambda_val)
-colors_single = ["red" if x > k else "steelblue" for x in x_vals]
+fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
 
-ax1.bar(x_vals, y_vals_single, color=colors_single, width=0.8, edgecolor='black', alpha=0.8)
-ax1.axvline(x=k + 0.5, color="red", linestyle="--", linewidth=2, label=f"Threshold k = {k}")
-ax1.text(14, max(y_vals_single) * 0.8, f"P(X > {k}) =\n{p_single_week*100:.2f}%", color="red", fontsize=12, weight="bold")
+# --- Panel 1: PMF ---
+ax = axes[0]
+colors = ['#c0392b' if xi > k else '#2874a6' for xi in x]
+ax.bar(x, pmf, color=colors, edgecolor='white', linewidth=0.6)
+ax.axvline(lam, color='black', linestyle='--', linewidth=1, label=f'λ = {lam}')
+ax.axvline(k, color='#c0392b', linestyle=':', linewidth=1.3, label=f'k = {k}')
+ax.set_title(f'Poisson PMF (λ = {lam})\nP(X > {k}) = {p_single:.4f}')
+ax.set_xlabel('Cases per week (X)')
+ax.set_ylabel('P(X = x)')
+ax.legend(frameon=False)
 
-ax1.set_title("Single Week Probability", fontsize=12, weight="bold")
-ax1.set_xlabel("Number of cases", fontsize=10)
-ax1.set_ylabel("Probability P(X = k)", fontsize=10)
-ax1.set_xticks(x_vals[::2]) # Visar varannat tal på x-axeln så det inte blir trångt
-ax1.grid(axis='y', linestyle='--', alpha=0.5)
-ax1.legend(loc="upper right")
+# --- Panel 2: Survival function ---
+ax = axes[1]
+ax.step(x, sf, where='post', color='#2874a6', linewidth=2, label='P(X > x)')
+ax.plot(k, p_single, 'o', color='#c0392b', zorder=5)
+ax.axhline(p_single, color='#c0392b', linestyle=':', linewidth=1.2)
+ax.axvline(k, color='#c0392b', linestyle=':', linewidth=1.2)
+ax.set_title('Survival function P(X > x)')
+ax.set_xlabel('Threshold (x)')
+ax.set_ylabel('P(X > x)')
+ax.legend(frameon=False)
 
-# ================= PLOT 2: TVÅ VECKOR I RAD =================
-# För två veckor i rad multipliceras den andra veckans utfall med p_single_week
-y_vals_two = y_vals_single * p_single_week
-colors_two = ["darkred" if x > k else "steelblue" for x in x_vals]
+# --- Panel 3: Single week vs. two weeks ---
+ax = axes[2]
+bars = ax.bar(['Single week\nP(X > 20)', 'Two weeks\nP(X > 20)²'],
+              [p_single, p_two], color=['#2874a6', '#c0392b'], width=0.5)
+for b, val in zip(bars, [p_single, p_two]):
+    ax.text(b.get_x() + b.get_width() / 2, val + max(p_single, p_two) * 0.03,
+            f'{val:.4f}\n({val*100:.3f} %)', ha='center')
+ax.set_ylabel('Probability')
+ax.set_title('Single week vs. two consecutive weeks')
 
-ax2.bar(x_vals, y_vals_two, color=colors_two, width=0.8, edgecolor='black', alpha=0.8)
-ax2.axvline(x=k + 0.5, color="red", linestyle="--", linewidth=2, label=f"Threshold k = {k}")
-ax2.text(14, max(y_vals_single) * 0.8, f"P(Both > {k}) =\n{p_two_weeks*100:.4f}%", color="darkred", fontsize=12, weight="bold")
+plt.tight_layout()
+plt.savefig('covid.png', dpi=200)
+plt.close()
 
-ax2.set_title("Two Consecutive Weeks", fontsize=12, weight="bold")
-ax2.set_xlabel("Number of cases", fontsize=10)
-ax2.set_ylabel("Probability", fontsize=10)
-ax2.set_xticks(x_vals[::2])
-ax2.grid(axis='y', linestyle='--', alpha=0.5)
-ax2.legend(loc="upper right")
-
-# Spara hela figuren med båda plottarna i din rotmapp
-plt.savefig("covid_python_plot.png", dpi=100, bbox_inches="tight")
-print("Bilden har sparats som 'covid_python_plot.png' i din rotmapp!\n")
+print("Saved combined figure as covid.png")
